@@ -36,7 +36,7 @@
         </View>
 
         <Button
-            android:id="@+id/recordlap"
+            android:id="@+id/wrap_content"
             android:layout_width="wrap_content"
             android:layout_height="346dp"
             android:background="@layout/recordlap" />

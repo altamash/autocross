@@ -43,65 +43,65 @@ public class TaggingActivity extends Activity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		setContentView(R.layout.dashboard);
+		setContentView(R.layout.tagging);
 //		if (android.os.Build.VERSION.SDK_INT > 9) {
 //		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //		    StrictMode.setThreadPolicy(policy);
 //		}
-//		mFirstVideo = (VideoView) findViewById(R.id.view);
-//		/*
-//		 * Alternatively,for streaming media you can use
-//		 * mVideoView.setVideoURI(Uri.parse(URLstring));
-//		 */
-////		File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/load", "file1");
-////		mFirstVideo.setVideoPath(file.getAbsolutePath());
-//		mFirstVideo.setVideoURI(Uri.parse("android.resource://"
-//				+ getPackageName() + "/" + R.raw.v8_turbo_480x270)); // Don't put
-////		mFirstVideo.setVideoPath("http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e");
-//		mFirstVideo.setMediaController(new MediaController(this));
-////		mFirstVideo.requestFocus();
-//		
-//		mSecondVideo = (VideoView) findViewById(R.id.view2);
-//		mSecondVideo.setVideoPath("http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e");
-//		mSecondVideo.setMediaController(new MediaController(this));
-//		
+		mFirstVideo = (VideoView) findViewById(R.id.view);
+		/*
+		 * Alternatively,for streaming media you can use
+		 * mVideoView.setVideoURI(Uri.parse(URLstring));
+		 */
+//		File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/load", "file1");
+//		mFirstVideo.setVideoPath(file.getAbsolutePath());
+		mFirstVideo.setVideoURI(Uri.parse("android.resource://"
+				+ getPackageName() + "/" + R.raw.v8_turbo_480x270)); // Don't put
+//		mFirstVideo.setVideoPath("http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e");
+		mFirstVideo.setMediaController(new MediaController(this));
+//		mFirstVideo.requestFocus();
+		
+		mSecondVideo = (VideoView) findViewById(R.id.view2);
+		mSecondVideo.setVideoPath("http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e");
+		mSecondVideo.setMediaController(new MediaController(this));
+		
+
+		Button button = (Button) findViewById(R.id.pause);
+		button.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				currentPosition = mFirstVideo.getCurrentPosition();
+				mFirstVideo.pause();
+				return false;
+			}
+		});
+
+		Button seek = (Button) findViewById(R.id.seek);
+		seek.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mFirstVideo.start();
+				mFirstVideo.seekTo(currentPosition);
+				return false;
+			}
+		});
+		
+//		mFirstVideo.setOnPreparedListener(new OnPreparedListener() {
+//		    @Override
+//		    public void onPrepared(MediaPlayer mp) {
 //
-//		Button button = (Button) findViewById(R.id.pause);
-//		button.setOnTouchListener(new OnTouchListener() {
+//		        mp.setOnSeekCompleteListener(new OnSeekCompleteListener() {
+//		            @Override
+//		            public void onSeekComplete(MediaPlayer mp) {
+//		            	mFirstVideo.start();
+//		            }
+//		        });
 //
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				currentPosition = mFirstVideo.getCurrentPosition();
-//				mFirstVideo.pause();
-//				return false;
-//			}
+//		    }
 //		});
-//
-//		Button seek = (Button) findViewById(R.id.seek);
-//		seek.setOnTouchListener(new OnTouchListener() {
-//			
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				mFirstVideo.start();
-//				mFirstVideo.seekTo(currentPosition);
-//				return false;
-//			}
-//		});
-//		
-////		mFirstVideo.setOnPreparedListener(new OnPreparedListener() {
-////		    @Override
-////		    public void onPrepared(MediaPlayer mp) {
-////
-////		        mp.setOnSeekCompleteListener(new OnSeekCompleteListener() {
-////		            @Override
-////		            public void onSeekComplete(MediaPlayer mp) {
-////		            	mFirstVideo.start();
-////		            }
-////		        });
-////
-////		    }
-////		});
-//		
+		
 //		mSecondVideo.setOnPreparedListener(new OnPreparedListener() {
 //		    @Override
 //		    public void onPrepared(MediaPlayer mp) {
