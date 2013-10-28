@@ -33,11 +33,11 @@ public class TaggingActivity extends Activity {
 //	http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8
 //	http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e
 
-	private VideoView mFirstVideo;
-	private VideoView mSecondVideo;
-	private VideoView currentVideo;
+	private io.vov.vitamio.widget.VideoView mFirstVideo;
+	private io.vov.vitamio.widget.VideoView mSecondVideo;
+	private io.vov.vitamio.widget.VideoView currentVideo;
 	int duration;
-	int currentPosition;
+	long currentPosition;
 	int secondCurrentPosition;
 //	final int CALIBRATE = -100;
 	MediaPlayer mp;
@@ -51,9 +51,9 @@ public class TaggingActivity extends Activity {
 //		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //		    StrictMode.setThreadPolicy(policy);
 //		}
-		setupVideoView((VideoView) findViewById(R.id.view),
+		setupVideoView((io.vov.vitamio.widget.VideoView) findViewById(R.id.view),
 				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270);
-		setupVideoView((VideoView) findViewById(R.id.view2),
+		setupVideoView((io.vov.vitamio.widget.VideoView) findViewById(R.id.view2),
 				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e");
 
 		Button button = (Button) findViewById(R.id.pause);
@@ -106,13 +106,14 @@ public class TaggingActivity extends Activity {
 //		DownloadFromUrl("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8", "file1");
 	}
 	
-	private void setupVideoView(final VideoView videoView, String url) {
+	private void setupVideoView(final io.vov.vitamio.widget.VideoView videoView, String url) {
 		videoView.setVideoURI(Uri.parse(url));
-		videoView.setMediaController(new MediaController(this));
+		videoView.setMediaController(new io.vov.vitamio.widget.MediaController(this));
 		videoView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				if(currentVideo != null) currentVideo.pause();
 				currentVideo = videoView;
 				return false;
 			}
@@ -120,19 +121,19 @@ public class TaggingActivity extends Activity {
 	}
 	
 	public void setScroll10Fps(View v) {
-		fps = 10;		
+		fps = 5;		
 	}
 	
 	public void setScroll20Fps(View v) {
-		fps = 20;		
+		fps = 10;		
 	}
 	
 	public void setScroll30Fps(View v) {
-		fps = 30;		
+		fps = 15;		
 	}
 	
 	public void setScroll40Fps(View v) {
-		fps = 40;		
+		fps = 20;		
 	}
 	
 	public void moveFramesBack(View v) {

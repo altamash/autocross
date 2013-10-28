@@ -6,32 +6,22 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="556dp"
-        android:layout_weight="0.21"
+        android:layout_height="419dp"
         android:background="@android:color/background_dark"
-        android:orientation="horizontal"
-        android:padding="20dp" >
+        android:orientation="horizontal" >
 
-        <VideoView
+        <io.vov.vitamio.widget.VideoView
             android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <View
-            android:layout_width="20dp"
-            android:layout_height="0dp" />
-
-        <VideoView
+        <io.vov.vitamio.widget.VideoView
             android:id="@+id/view2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="20dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
