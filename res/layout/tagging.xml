@@ -54,10 +54,11 @@
             android:text="Seek"
             android:visibility="gone" />
 		<Button
-            android:id="@+id/button1"
+            android:id="@+id/tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:onClick="dialog"
             android:text="Tag" />
 		<Button
             android:id="@+id/btn40"
