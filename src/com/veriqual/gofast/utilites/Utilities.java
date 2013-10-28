@@ -133,7 +133,7 @@ public class Utilities {
 		return null;
 	}
 	
-	public String generateTagMsg(String currentVideo, Video first, Video second) {
+	public static String generateTagMsg(String currentVideo, Video first, Video second) {
 		String msg = null;
 		String firstVideoLastTag = getLastTag(first.getTagging());
 		String secondVideoLastTag = getLastTag(second.getTagging());
@@ -151,7 +151,7 @@ public class Utilities {
 			}
 		} else { 
 			if (firstVideoLastTag == null) {
-				msg = "Set start tag for first video";
+				msg = "Set start tag for first video, first";
 			} else {
 				if (secondVideoLastTag == null) {
 					msg = "Set start tag for second video";

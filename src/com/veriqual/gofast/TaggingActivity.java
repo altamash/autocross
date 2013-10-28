@@ -29,6 +29,7 @@ import android.widget.VideoView;
 import com.veriqual.gofast.dialog.TagDialog;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
+import com.veriqual.gofast.utilites.Utilities;
 
 public class TaggingActivity extends Activity implements TagDialog.TagDialogListener {
 //	http://vimeo.com/5937483/download?t=1380622550&v=5043551&s=bff330857f646c387da8103aed5ee65b
@@ -127,7 +128,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	public void dialog(View v) {
 		DialogFragment dialog = new TagDialog();
 		Bundle args = new Bundle();
-		args.putString("msg", "Set start tag for first video");
+		args.putString("msg", Utilities.generateTagMsg(cvName, firstVideo, secondVideo));
 		dialog.setArguments(args);
         dialog.show(getFragmentManager(), "TagDialog");
 	}
