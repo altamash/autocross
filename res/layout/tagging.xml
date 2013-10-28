@@ -36,7 +36,9 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp" >
+        android:paddingLeft="40dp" 
+        android:paddingRight="40dp"
+        android:paddingBottom="10dp">
 
         <Button
             android:id="@+id/pause"
@@ -58,29 +60,47 @@
             android:layout_centerHorizontal="true"
             android:text="Tag" />
 		<Button
-            android:id="@+id/40"
+            android:id="@+id/btn40"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:onClick="setScroll40Fps"
             android:text="40" />
 		<Button
-            android:id="@+id/30"
+            android:id="@+id/btn30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/40"
+            android:layout_toLeftOf="@id/btn40"
+            android:onClick="setScroll30Fps"
             android:text="30" />
 		<Button
-            android:id="@+id/20"
+            android:id="@+id/btn20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/30"
+            android:layout_toLeftOf="@id/btn30"
+            android:onClick="setScroll20Fps"
             android:text="20" />
 		<Button
-            android:id="@+id/10"
+            android:id="@+id/btn10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/20"
+            android:layout_toLeftOf="@id/btn20"
+            android:onClick="setScroll10Fps"
             android:text="10" />
+		<Button
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:onClick="moveFramesBack"
+            android:text="left" />
+		<Button
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/left"
+            android:onClick="moveFramesForward"
+            android:text="right" />
     </RelativeLayout>
 
 </LinearLayout>
