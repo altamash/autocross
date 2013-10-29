@@ -67,6 +67,12 @@ public class TagDialog extends DialogFragment implements OnCheckedChangeListener
 	    if(getArguments().getString("hideinput") != null) {
 	    	group.setVisibility(View.GONE);
 	    	input.setVisibility(View.GONE);
+	    } else {
+	    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	               @Override
+	               public void onClick(DialogInterface dialog, int id) {
+	               }
+	           });
 	    }
 	    radio1 = (RadioButton) input.findViewById(R.id.radio1);
 	    ((RadioButton) input.findViewById(R.id.radio2)).setChecked(true);
@@ -79,6 +85,7 @@ public class TagDialog extends DialogFragment implements OnCheckedChangeListener
 	    builder.setMessage(getArguments().getString("msg"))
 	    		.setTitle("Tag")
 	    		.setView(input)
+//	    		.setIcon(R.drawable.)
 //	    		.setAdapter(adapter, new DialogInterface.OnClickListener() {
 //	               public void onClick(DialogInterface dialog, int which) {
 	               // The 'which' argument contains the index position
@@ -106,12 +113,19 @@ public class TagDialog extends DialogFragment implements OnCheckedChangeListener
 	                   // or return them to the component that opened the dialog
 	            	   mListener.onDialogPositiveClick(TagDialog.this);
 	               }
-	           })
-	           .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	               @Override
-	               public void onClick(DialogInterface dialog, int id) {
-	               }
 	           });
+
+		if (getArguments().getString("hideinput") != null) {
+			group.setVisibility(View.GONE);
+			input.setVisibility(View.GONE);
+		} else {
+			builder.setNegativeButton("Cancel",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int id) {
+						}
+					});
+		}
 
 	    return builder.create();
 	}

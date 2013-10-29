@@ -149,7 +149,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		if(tag == null) {
 			tag = ((TagDialog)dialog).getTg();
 		}
-		if (tag == null) return;
+		if (tag == null || tag.isEmpty()) return;
 		if (cvName.equals(firstVideo.getVideoOrder())) {
 			firstVideo.getTagging().addTag(tag, currentVideo.getCurrentPosition());
 		} else {

@@ -142,80 +142,34 @@ public class Utilities {
 		String secondVideoLastTag = getLastTag(second.getTagging());
 		if (currentVideo.equals(Video.FIRSTVIDEO)) {
 			if (firstVideoLastTag == null) {
-				msg = "Set start tag for first video";
+				msg = "Set [Start Tag] for first video at this location?";
 			} else {
 				if (secondVideoLastTag == null) {
-					msg = "Set start tag for second video, first";
+					msg = "Set [Start Tag] for second video, first!";
 				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
-					msg = "Set [" + firstVideoLastTag + "] tag for second video";
+					msg = "Set [" + firstVideoLastTag + "] tag for second video at this location?";
 				} else {
-					msg = "Set tag/finish tag for first video";
+					msg = "Set [Tag/Finish Tag] for first video";
 				}
 			}
 		} else { 
 			if (firstVideoLastTag == null) {
-				msg = "Set start tag for first video, first";
+				msg = "Set [Start Tag] for first video, first!";
 			} else {
 				if (secondVideoLastTag == null) {
-					msg = "Set start tag for second video";
+					msg = "Set [Start Tag] for second video at this location?";
 				} else {
 					if (firstVideoLastTag.equals(secondVideoLastTag)) {
-						msg = "Set tag for first video, first";
+						msg = "Set [Tag] for first video, first!";
 					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
-						msg = "Set finish tag for second video";
+						msg = "Set [Finish Tag] for second video at this location?";
 					} else {
-						msg = "Set [" + firstVideoLastTag + "] tag for second video";
+						msg = "Set [" + firstVideoLastTag + "] tag for second video at this location?";
 					}
 				}
 			}
 		}
 		return msg;
-	}
-	
-	public static boolean isHideGroup(String currentVideo, Video first, Video second) {
-		boolean hideGroups;
-		String msg = null;
-		String firstVideoLastTag = getLastTag(first.getTagging());
-		String secondVideoLastTag = getLastTag(second.getTagging());
-		if (currentVideo.equals(Video.FIRSTVIDEO)) {
-			if (firstVideoLastTag == null) {
-				msg = "Set start tag for first video";
-				hideGroups = true;
-			} else {
-				if (secondVideoLastTag == null) {
-					msg = "Set start tag for second video, first";
-					hideGroups = true;
-				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
-					msg = "Set " + firstVideoLastTag + " tag for second video";
-					hideGroups = true;
-				} else {
-					msg = "Set tag/finish tag for first video";
-					hideGroups = false;
-				}
-			}
-		} else { 
-			if (firstVideoLastTag == null) {
-				msg = "Set start tag for first video, first";
-				hideGroups = true;
-			} else {
-				if (secondVideoLastTag == null) {
-					msg = "Set start tag for second video";
-					hideGroups = true;
-				} else {
-					if (firstVideoLastTag.equals(secondVideoLastTag)) {
-						msg = "Set tag for first video, first";
-						hideGroups = true;
-					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
-						msg = "Set finish tag for second video";
-						hideGroups = true;
-					} else {
-						msg = "Set " + firstVideoLastTag + "tag for second video";
-						hideGroups = true;
-					}
-				}
-			}
-		}
-		return hideGroups;
 	}
 	
 	public static boolean isHideInput(String currentVideo, Video first, Video second) {
