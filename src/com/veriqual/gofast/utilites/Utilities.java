@@ -126,9 +126,12 @@ public class Utilities {
 	public static String getLastTag(Tagging tagging) {
 		Map<String, Integer> tags = tagging.getTags();
 		int size = tags.size();
+		Entry<String, Integer> entry = null;
+		for(Entry<String, Integer> tag : tags.entrySet()) {
+			entry = tag;
+		}
 		if(size != 0) {
-			Entry<String, Integer>[] entries = new Entry[size];
-			return (entries[size - 1]).getKey();
+			return entry.getKey();
 		}
 		return null;
 	}
@@ -144,7 +147,7 @@ public class Utilities {
 				if (secondVideoLastTag == null) {
 					msg = "Set start tag for second video, first";
 				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
-					msg = "Set " + firstVideoLastTag + " tag for second video";
+					msg = "Set [" + firstVideoLastTag + "] tag for second video";
 				} else {
 					msg = "Set tag/finish tag for first video";
 				}
@@ -161,11 +164,134 @@ public class Utilities {
 					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
 						msg = "Set finish tag for second video";
 					} else {
-						msg = "Set " + firstVideoLastTag + "tag for second video";
+						msg = "Set [" + firstVideoLastTag + "] tag for second video";
 					}
 				}
 			}
 		}
 		return msg;
+	}
+	
+	public static boolean isHideGroup(String currentVideo, Video first, Video second) {
+		boolean hideGroups;
+		String msg = null;
+		String firstVideoLastTag = getLastTag(first.getTagging());
+		String secondVideoLastTag = getLastTag(second.getTagging());
+		if (currentVideo.equals(Video.FIRSTVIDEO)) {
+			if (firstVideoLastTag == null) {
+				msg = "Set start tag for first video";
+				hideGroups = true;
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set start tag for second video, first";
+					hideGroups = true;
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
+					msg = "Set " + firstVideoLastTag + " tag for second video";
+					hideGroups = true;
+				} else {
+					msg = "Set tag/finish tag for first video";
+					hideGroups = false;
+				}
+			}
+		} else { 
+			if (firstVideoLastTag == null) {
+				msg = "Set start tag for first video, first";
+				hideGroups = true;
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set start tag for second video";
+					hideGroups = true;
+				} else {
+					if (firstVideoLastTag.equals(secondVideoLastTag)) {
+						msg = "Set tag for first video, first";
+						hideGroups = true;
+					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
+						msg = "Set finish tag for second video";
+						hideGroups = true;
+					} else {
+						msg = "Set " + firstVideoLastTag + "tag for second video";
+						hideGroups = true;
+					}
+				}
+			}
+		}
+		return hideGroups;
+	}
+	
+	public static boolean isHideInput(String currentVideo, Video first, Video second) {
+		boolean hideInput;
+		String firstVideoLastTag = getLastTag(first.getTagging());
+		String secondVideoLastTag = getLastTag(second.getTagging());
+		if (currentVideo.equals(Video.FIRSTVIDEO)) {
+			if (firstVideoLastTag == null) {
+				hideInput = true;
+			} else {
+				if (secondVideoLastTag == null) {
+					hideInput = true;
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
+					hideInput = true;
+				} else {
+					hideInput = false;
+				}
+			}
+		} else { 
+//			if (firstVideoLastTag == null) {
+				hideInput = true;
+//			} else {
+//				if (secondVideoLastTag == null) {
+//					hideInput = true;
+//				} else {
+//					if (firstVideoLastTag.equals(secondVideoLastTag)) {
+//						hideInput = true;
+//					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
+//						hideInput = true;
+//					} else {
+//						hideInput = true;
+//					}
+//				}
+//			}
+		}
+		return hideInput;
+	}
+	
+	public static String getTag(String currentVideo, Video first, Video second) {
+		String msg = null;
+		String tag = null;
+		String firstVideoLastTag = getLastTag(first.getTagging());
+		String secondVideoLastTag = getLastTag(second.getTagging());
+		if (currentVideo.equals(Video.FIRSTVIDEO)) {
+			if (firstVideoLastTag == null) {
+				msg = "Set start tag for first video";
+				tag = Tagging.STARTTAG;
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set start tag for second video, first";
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
+					msg = "Set [" + firstVideoLastTag + "] tag for second video";
+				} else {
+					msg = "Set tag/finish tag for first video";
+				}
+			}
+		} else { 
+			if (firstVideoLastTag == null) {
+				msg = "Set start tag for first video, first";
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set start tag for second video";
+					tag = Tagging.STARTTAG;
+				} else {
+					if (firstVideoLastTag.equals(secondVideoLastTag)) {
+						msg = "Set tag for first video, first";
+					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
+						msg = "Set finish tag for second video";
+						tag = Tagging.FINISHTAG;
+					} else {
+						msg = "Set [" + firstVideoLastTag + "] tag for second video";
+						tag = firstVideoLastTag;
+					}
+				}
+			}
+		}
+		return tag;
 	}
 }

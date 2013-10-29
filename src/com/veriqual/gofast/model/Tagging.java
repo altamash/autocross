@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Tagging {
 	public static String STARTTAG = "Start Tag";
-	public static String FINISHTAG = "End Tag";
+	public static String FINISHTAG = "Finish Tag";
 	private Map<String, Integer> tags = new LinkedHashMap<String, Integer>();
 	
 	public void addTag(String tag, Integer val) {

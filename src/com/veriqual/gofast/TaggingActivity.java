@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.veriqual.gofast.dialog.TagDialog;
@@ -46,6 +47,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	int fps;
 	Video firstVideo; 
 	Video secondVideo;
+	TagDialog dialog;
+	TextView lapName;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -72,6 +75,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 				return false;
 			}
 		});
+		
+		lapName = (TextView) findViewById(R.id.lapName);
 
 		Button seek = (Button) findViewById(R.id.seek);
 		seek.setOnTouchListener(new OnTouchListener() {
@@ -92,8 +97,10 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				if(currentVideo != null) currentVideo.pause();
 				currentVideo = videoView;
 				cvName = video.getVideoOrder();
+				lapName.setText("Selected Lap: " + cvName);
 				return false;
 			}
 		});
@@ -102,19 +109,19 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void setScroll10Fps(View v) {
-		fps = 10;		
+		fps = 5;		
 	}
 	
 	public void setScroll20Fps(View v) {
-		fps = 20;		
+		fps = 10;		
 	}
 	
 	public void setScroll30Fps(View v) {
-		fps = 30;		
+		fps = 15;		
 	}
 	
 	public void setScroll40Fps(View v) {
-		fps = 40;		
+		fps = 20;		
 	}
 	
 	public void moveFramesBack(View v) {
@@ -126,9 +133,11 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void dialog(View v) {
-		DialogFragment dialog = new TagDialog();
+		if (cvName == null) return; 
+		dialog = new TagDialog();
 		Bundle args = new Bundle();
 		args.putString("msg", Utilities.generateTagMsg(cvName, firstVideo, secondVideo));
+		if(Utilities.isHideInput(cvName, firstVideo, secondVideo)) args.putString("hideinput", "");
 		dialog.setArguments(args);
         dialog.show(getFragmentManager(), "TagDialog");
 	}
@@ -136,7 +145,17 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		// TODO Auto-generated method stub
-		
+		String tag = Utilities.getTag(cvName, firstVideo, secondVideo);
+		if(tag == null) {
+			tag = ((TagDialog)dialog).getTg();
+		}
+		if (tag == null) return;
+		if (cvName.equals(firstVideo.getVideoOrder())) {
+			firstVideo.getTagging().addTag(tag, currentVideo.getCurrentPosition());
+		} else {
+			secondVideo.getTagging().addTag(tag, currentVideo.getCurrentPosition());
+		}
+//		System.out.println(tag);
 	}
 
 	@Override

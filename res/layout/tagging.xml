@@ -102,6 +102,16 @@
             android:layout_toRightOf="@id/left"
             android:onClick="moveFramesForward"
             android:text="right" />
+
+		<TextView
+		    android:id="@+id/lapName"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignBaseline="@+id/right"
+		    android:layout_alignBottom="@+id/right"
+		    android:layout_marginLeft="41dp"
+		    android:layout_toRightOf="@+id/right" />
+
     </RelativeLayout>
 
 </LinearLayout>
