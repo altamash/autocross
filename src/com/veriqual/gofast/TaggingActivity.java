@@ -1,24 +1,10 @@
 package com.veriqual.gofast;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
-import org.apache.http.util.ByteArrayBuffer;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -146,7 +132,6 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
-		// TODO Auto-generated method stub
 		String tag = Utilities.getTag(cvName, firstVideo, secondVideo);
 		if(tag == null) {
 			tag = ((TagDialog)dialog).getTg();
