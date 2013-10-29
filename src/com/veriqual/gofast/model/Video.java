@@ -6,7 +6,14 @@ public class Video {
 	private String order;
 	private String url;
 	private Tagging tagging;
+	private int startOffset;
 	
+	public int getStartOffset() {
+		return startOffset;
+	}
+	public void setStartOffset(int startOffset) {
+		this.startOffset = startOffset;
+	}
 	public Video(String number) {
 		this.order = number;
 	}

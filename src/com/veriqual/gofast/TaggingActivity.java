@@ -49,6 +49,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	Video secondVideo;
 	TagDialog dialog;
 	TextView lapName;
+	int fvMargin;
+	int svMargin;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -150,18 +152,22 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			tag = ((TagDialog)dialog).getTg();
 		}
 		if (tag == null || tag.isEmpty()) return;
+		int currentPosition = currentVideo.getCurrentPosition();
 		if (cvName.equals(firstVideo.getVideoOrder())) {
-			firstVideo.getTagging().addTag(tag, currentVideo.getCurrentPosition());
+			if (firstVideo.getStartOffset() == 0) {
+				firstVideo.setStartOffset(currentPosition - 1);
+			}
+			firstVideo.getTagging().addTag(tag, currentPosition - firstVideo.getStartOffset());
 		} else {
-			secondVideo.getTagging().addTag(tag, currentVideo.getCurrentPosition());
+			if (secondVideo.getStartOffset() == 0) {
+				secondVideo.setStartOffset(currentPosition - 1);
+			}
+			secondVideo.getTagging().addTag(tag, currentPosition - secondVideo.getStartOffset());
 		}
-//		System.out.println(tag);
 	}
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
