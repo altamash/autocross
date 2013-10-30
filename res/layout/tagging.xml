@@ -36,8 +36,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="40dp" 
-        android:paddingRight="40dp"
+        android:paddingLeft="30dp" 
+        android:paddingRight="30dp"
         android:paddingBottom="10dp">
 
         <Button
@@ -105,12 +105,20 @@
 
 		<TextView
 		    android:id="@+id/lapName"
-		    android:layout_width="wrap_content"
+		    android:layout_width="190dp"
 		    android:layout_height="wrap_content"
 		    android:layout_alignBaseline="@+id/right"
 		    android:layout_alignBottom="@+id/right"
-		    android:layout_marginLeft="41dp"
+		    android:layout_marginLeft="11dp"
 		    android:layout_toRightOf="@+id/right" />
+
+		<Button
+		    android:id="@+id/compare"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_toRightOf="@id/lapName"
+		    android:onClick="compare"
+		    android:text="Comp" />
 
     </RelativeLayout>
 

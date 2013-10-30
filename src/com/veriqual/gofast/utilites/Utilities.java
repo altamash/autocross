@@ -10,11 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.util.ByteArrayBuffer;
 
+import android.R.anim;
 import android.util.Log;
 
 import com.veriqual.gofast.model.Tagging;
@@ -146,8 +149,8 @@ public class Utilities {
 			} else {
 				if (secondVideoLastTag == null) {
 					msg = "Set [Start Tag] for second video, first!";
-				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
-					msg = "Set [" + firstVideoLastTag + "] tag for second video at this location?";
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) { //
+					msg = "Set [" + firstVideoLastTag + "] tag for second video, first!";
 				} else {
 					msg = "Set [Tag/Finish Tag] for first video";
 				}
@@ -160,11 +163,11 @@ public class Utilities {
 					msg = "Set [Start Tag] for second video at this location?";
 				} else {
 					if (firstVideoLastTag.equals(secondVideoLastTag)) {
-						msg = "Set [Tag] for first video, first!";
+						msg = "Set tag for first video, first!";
 					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
 						msg = "Set [Finish Tag] for second video at this location?";
 					} else {
-						msg = "Set [" + firstVideoLastTag + "] tag for second video at this location?";
+						msg = "Set " + firstVideoLastTag + " tag for second video at this location?";
 					}
 				}
 			}
@@ -248,4 +251,143 @@ public class Utilities {
 		}
 		return tag;
 	}
+	
+	public static int getTagDlgIcon(String currentVideo, Video first, Video second) {
+		int icon;
+		String firstVideoLastTag = getLastTag(first.getTagging());
+		String secondVideoLastTag = getLastTag(second.getTagging());
+		if (currentVideo.equals(Video.FIRSTVIDEO)) {
+			if (firstVideoLastTag == null) {
+				icon = com.veriqual.gofast.R.drawable.tag;
+			} else {
+				if (secondVideoLastTag == null) {
+					icon = com.veriqual.gofast.R.drawable.info;
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
+					icon = com.veriqual.gofast.R.drawable.info;
+				} else {
+					icon = com.veriqual.gofast.R.drawable.tag;
+				}
+			}
+		} else { 
+			if (firstVideoLastTag == null) {
+				icon = com.veriqual.gofast.R.drawable.info;
+			} else {
+				if (secondVideoLastTag == null) {
+					icon = com.veriqual.gofast.R.drawable.tag;
+				} else {
+					if (firstVideoLastTag.equals(secondVideoLastTag)) {
+						icon = com.veriqual.gofast.R.drawable.info;
+					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
+						icon = com.veriqual.gofast.R.drawable.tag;
+					} else {
+						icon = com.veriqual.gofast.R.drawable.tag;
+					}
+				}
+			}
+		}
+		return icon;
+	}
+	
+	public static boolean isTagDlgOneButton(String currentVideo, Video first, Video second) {
+		String msg = null;
+		boolean oneButton;
+		String firstVideoLastTag = getLastTag(first.getTagging());
+		String secondVideoLastTag = getLastTag(second.getTagging());
+		if (currentVideo.equals(Video.FIRSTVIDEO)) {
+			if (firstVideoLastTag == null) {
+				msg = "Set [Start Tag] for first video at this location?";
+				oneButton = false;
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set [Start Tag] for second video, first!";
+					oneButton = true;
+				} else if (!firstVideoLastTag.equals(secondVideoLastTag)) {
+					msg = "Set [" + firstVideoLastTag + "] tag for second video at this location?";
+					oneButton = true;
+				} else {
+					msg = "Set [Tag/Finish Tag] for first video";
+					oneButton = false;
+				}
+			}
+		} else { 
+			if (firstVideoLastTag == null) {
+				msg = "Set [Start Tag] for first video, first!";
+				oneButton = true;
+			} else {
+				if (secondVideoLastTag == null) {
+					msg = "Set [Start Tag] for second video at this location?";
+					oneButton = false;
+				} else {
+					if (firstVideoLastTag.equals(secondVideoLastTag)) {
+						msg = "Set tag for first video, first!";
+						oneButton = true;
+					} else if (firstVideoLastTag.equals(Tagging.FINISHTAG)) {
+						msg = "Set [Finish Tag] for second video at this location?";
+						oneButton = false;
+					} else {
+						msg = "Set " + firstVideoLastTag + " tag for second video at this location?";
+						oneButton = false;
+					}
+				}
+			}
+		}
+		return oneButton;
+	}
+	
+	public static ArrayList<HashMap> populateList(Video first, Video second) {
+		ArrayList<HashMap> list = new ArrayList<HashMap>();
+		for (Entry<String, Integer> entry : first.getTagging().getTags().entrySet()) {
+			HashMap temp = new HashMap();
+			temp.put(Constant.FIRST_COLUMN,entry.getKey());
+            temp.put(Constant.SECOND_COLUMN, String.valueOf(entry.getValue()));
+            if(second.getTagging().getTags().get(entry.getKey()) != null) {
+            	temp.put(Constant.THIRD_COLUMN, String.valueOf(second.getTagging().getTags().get(entry.getKey())));
+            	temp.put(Constant.FOURTH_COLUMN, String.valueOf(entry.getValue() - second.getTagging().getTags().get(entry.getKey())));
+            }
+            list.add(temp);
+		}
+		return list;
+		
+	}
+	
+	public static ArrayList<HashMap> populateList() {
+		 
+		ArrayList<HashMap> list = new ArrayList<HashMap>();
+ 
+        HashMap temp = new HashMap();
+            temp.put(Constant.FIRST_COLUMN,"Colored Notebooks");
+            temp.put(Constant.SECOND_COLUMN, "By NavNeet");
+            temp.put(Constant.THIRD_COLUMN, "Rs. 200");
+            temp.put(Constant.FOURTH_COLUMN, "Per Unit");
+        list.add(temp);
+ 
+        HashMap temp1 = new HashMap();
+            temp1.put(Constant.FIRST_COLUMN,"Diaries");
+            temp1.put(Constant.SECOND_COLUMN, "By Amee Products");
+            temp1.put(Constant.THIRD_COLUMN, "Rs. 400");
+            temp1.put(Constant.FOURTH_COLUMN, "Per Unit");
+        list.add(temp1);
+ 
+        HashMap temp2 = new HashMap();
+            temp2.put(Constant.FIRST_COLUMN,"Note Books and Stationery");
+            temp2.put(Constant.SECOND_COLUMN, "By National Products");
+            temp2.put(Constant.THIRD_COLUMN, "Rs. 600");
+            temp2.put(Constant.FOURTH_COLUMN, "Per Unit");
+        list.add(temp2);
+ 
+        HashMap temp3 = new HashMap();
+            temp3.put(Constant.FIRST_COLUMN,"Corporate Diaries");
+            temp3.put(Constant.SECOND_COLUMN, "By Devarsh Prakashan");
+            temp3.put(Constant.THIRD_COLUMN, "Rs. 800");
+            temp3.put(Constant.FOURTH_COLUMN, "Per Unit");
+        list.add(temp3);
+ 
+        HashMap temp4 = new HashMap();
+            temp4.put(Constant.FIRST_COLUMN,"Writing Pad");
+            temp4.put(Constant.SECOND_COLUMN, "By TechnoTalaktive Pvt. Ltd.");
+            temp4.put(Constant.THIRD_COLUMN, "Rs. 100");
+            temp4.put(Constant.FOURTH_COLUMN, "Per Unit");
+        list.add(temp4);
+		return list;
+    }
 }

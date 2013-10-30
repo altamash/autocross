@@ -1,14 +1,18 @@
 package com.veriqual.gofast;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -16,6 +20,7 @@ import android.widget.VideoView;
 import com.veriqual.gofast.dialog.TagDialog;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
+import com.veriqual.gofast.utilites.ListviewAdapter;
 import com.veriqual.gofast.utilites.Utilities;
 
 public class TaggingActivity extends Activity implements TagDialog.TagDialogListener {
@@ -37,6 +42,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	TextView lapName;
 	int fvMargin;
 	int svMargin;
+	int markerCount;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -125,9 +131,40 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		dialog = new TagDialog();
 		Bundle args = new Bundle();
 		args.putString("msg", Utilities.generateTagMsg(cvName, firstVideo, secondVideo));
-		if(Utilities.isHideInput(cvName, firstVideo, secondVideo)) args.putString("hideinput", "");
+		if(Utilities.isHideInput(cvName, firstVideo, secondVideo)) {
+			args.putString("hideinput", "");
+		} else {
+			if (cvName == Video.FIRSTVIDEO) {
+				args.putInt("tagCount", firstVideo.getTagging().getTags().size());
+			} else {
+				args.putInt("tagCount", secondVideo.getTagging().getTags().size());
+			}
+		}
+		args.putInt("icon", Utilities.getTagDlgIcon(cvName, firstVideo, secondVideo));
+		args.putBoolean("ok", Utilities.isTagDlgOneButton(cvName, firstVideo, secondVideo));
 		dialog.setArguments(args);
         dialog.show(getFragmentManager(), "TagDialog");
+	}
+	
+	public void compare(View v) {
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.custom);
+		dialog.setTitle("Tag Comparisons...");
+		
+		ListView lview = (ListView) dialog.findViewById(R.id.listview);
+        ListviewAdapter adapter = new ListviewAdapter(this, Utilities.populateList(firstVideo, secondVideo));
+        lview.setAdapter(adapter);
+
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
 	}
 	
 	@Override
