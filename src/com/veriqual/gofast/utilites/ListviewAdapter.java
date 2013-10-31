@@ -4,6 +4,7 @@ package com.veriqual.gofast.utilites;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,9 +52,6 @@ import com.veriqual.gofast.utilites.Constant;
 	 
 	    @Override
 	    public View getView(int position, View convertView, ViewGroup parent) {
-	        // TODO Auto-generated method stub
-	 
-	        // TODO Auto-generated method stub
 	                ViewHolder holder;
 	                LayoutInflater inflater =  activity.getLayoutInflater();
 	 
@@ -75,7 +73,14 @@ import com.veriqual.gofast.utilites.Constant;
 	                holder.txtFirst.setText(map.get(Constant.FIRST_COLUMN));
 	                holder.txtSecond.setText(map.get(Constant.SECOND_COLUMN));
 	                holder.txtThird.setText(map.get(Constant.THIRD_COLUMN));
-	                holder.txtFourth.setText(map.get(Constant.FOURTH_COLUMN));
+	                String result = map.get(Constant.FOURTH_COLUMN);
+	                if(result.startsWith("-")) {
+	                	result = result.substring(1);
+	                	holder.txtFourth.setTextColor(Color.RED);
+	                } else {
+	                	holder.txtFourth.setTextColor(Color.GREEN);
+	                }
+	                holder.txtFourth.setText(result);
 	 
 	            return convertView;
 	    }

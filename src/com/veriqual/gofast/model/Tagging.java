@@ -6,9 +6,9 @@ import java.util.Map;
 public class Tagging {
 	public static String STARTTAG = "Start Tag";
 	public static String FINISHTAG = "Finish Tag";
-	private Map<String, Integer> tags = new LinkedHashMap<String, Integer>();
+	private Map<String, Long> tags = new LinkedHashMap<String, Long>();
 	
-	public void addTag(String tag, Integer val) {
+	public void addTag(String tag, Long val) {
 		tags.put(tag, val);
 	}
 	
@@ -20,7 +20,7 @@ public class Tagging {
 		return tags.get(FINISHTAG) != null;		
 	}
 	
-	public Map<String, Integer> getTags() {
+	public Map<String, Long> getTags() {
 		return tags;
 	}
 }

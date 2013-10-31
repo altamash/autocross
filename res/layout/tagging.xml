@@ -36,9 +36,9 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp" 
-        android:paddingRight="30dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" >
 
         <Button
             android:id="@+id/pause"
@@ -53,73 +53,55 @@
             android:layout_height="wrap_content"
             android:text="Seek"
             android:visibility="gone" />
-		<Button
+
+        <Button
+            android:id="@+id/left"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/reverse"
+            android:onClick="moveFramesBack" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@id/left"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@id/spinner1"
+            android:background="@drawable/forward"
+            android:onClick="moveFramesForward" />
+
+        <TextView
+            android:id="@+id/lapName"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/right"
+            android:layout_alignBottom="@+id/right"
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@+id/right" />
+
+        <Button
             android:id="@+id/tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/lapName"
             android:onClick="dialog"
             android:text="Tag" />
-		<Button
-            android:id="@+id/btn40"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:onClick="setScroll40Fps"
-            android:text="40" />
-		<Button
-            android:id="@+id/btn30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btn40"
-            android:onClick="setScroll30Fps"
-            android:text="30" />
-		<Button
-            android:id="@+id/btn20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btn30"
-            android:onClick="setScroll20Fps"
-            android:text="20" />
-		<Button
-            android:id="@+id/btn10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btn20"
-            android:onClick="setScroll10Fps"
-            android:text="10" />
-		<Button
-            android:id="@+id/left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:onClick="moveFramesBack"
-            android:text="left" />
-		<Button
-            android:id="@+id/right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/left"
-            android:onClick="moveFramesForward"
-            android:text="right" />
 
-		<TextView
-		    android:id="@+id/lapName"
-		    android:layout_width="190dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignBaseline="@+id/right"
-		    android:layout_alignBottom="@+id/right"
-		    android:layout_marginLeft="11dp"
-		    android:layout_toRightOf="@+id/right" />
-
-		<Button
-		    android:id="@+id/compare"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_toRightOf="@id/lapName"
-		    android:onClick="compare"
-		    android:text="Comp" />
-
+        <Button
+            android:id="@+id/compare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tag"
+            android:onClick="compare"
+            android:text="Comp" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -127,10 +127,10 @@ public class Utilities {
 	}
 	
 	public static String getLastTag(Tagging tagging) {
-		Map<String, Integer> tags = tagging.getTags();
+		Map<String, Long> tags = tagging.getTags();
 		int size = tags.size();
-		Entry<String, Integer> entry = null;
-		for(Entry<String, Integer> tag : tags.entrySet()) {
+		Entry<String, Long> entry = null;
+		for(Entry<String, Long> tag : tags.entrySet()) {
 			entry = tag;
 		}
 		if(size != 0) {
@@ -336,17 +336,37 @@ public class Utilities {
 	
 	public static ArrayList<HashMap> populateList(Video first, Video second) {
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
-		for (Entry<String, Integer> entry : first.getTagging().getTags().entrySet()) {
+		for (Entry<String, Long> entry : first.getTagging().getTags().entrySet()) {
 			HashMap temp = new HashMap();
 			temp.put(Constant.FIRST_COLUMN,entry.getKey());
-            temp.put(Constant.SECOND_COLUMN, String.valueOf(entry.getValue()));
+            temp.put(Constant.SECOND_COLUMN, getFormattedTime(entry.getValue()));
             if(second.getTagging().getTags().get(entry.getKey()) != null) {
-            	temp.put(Constant.THIRD_COLUMN, String.valueOf(second.getTagging().getTags().get(entry.getKey())));
-            	temp.put(Constant.FOURTH_COLUMN, String.valueOf(entry.getValue() - second.getTagging().getTags().get(entry.getKey())));
+            	temp.put(Constant.THIRD_COLUMN, getFormattedTime(second.getTagging().getTags().get(entry.getKey())));
+            	temp.put(Constant.FOURTH_COLUMN, getFormattedTime(entry.getValue() - second.getTagging().getTags().get(entry.getKey())));
             }
             list.add(temp);
 		}
 		return list;
 		
+	}
+	
+	public static String getFormattedTime(long time) {
+		String str = "";
+		if (time < 0) {
+			time = -time;
+			str = "-";
+		}
+		long minutes = time / 60000;
+		long seconds = (time % 60000) / 1000;
+		long hndrds = ((time % 60000) % 1000) / 100;
+		
+		String m = String.valueOf(minutes);
+		String s = String.valueOf(seconds);
+		String h = String.valueOf(hndrds);
+		
+		m = ("00" + m).substring(m.length());
+		s = ("00" + s).substring(s.length());
+		h = ("00" + h).substring(h.length());
+		return str + m + ":" + s + ":" + h;
 	}
 }

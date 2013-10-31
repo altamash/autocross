@@ -1,19 +1,25 @@
 package com.veriqual.gofast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -40,6 +46,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	Video secondVideo;
 	TagDialog dialog;
 	TextView lapName;
+	Spinner spinner;
 	int fvMargin;
 	int svMargin;
 	int markerCount;
@@ -58,6 +65,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		secondVideo = new Video(Video.SECONDVIDEO);
 		setupVideoView((VideoView) findViewById(R.id.view2),
 				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
+		
+		addItemsOnSpinner();
 
 		Button button = (Button) findViewById(R.id.pause);
 		button.setOnTouchListener(new OnTouchListener() {
@@ -167,6 +176,40 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		dialog.show();
 	}
 	
+	public void addItemsOnSpinner() {
+		 
+		spinner = (Spinner) findViewById(R.id.spinner1);
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("5");
+		list.add("10");
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_style,list) {
+
+		    public View getView(int position, View convertView,ViewGroup parent) {
+
+		        View v = super.getView(position, convertView, parent);
+
+		        ((TextView) v).setTextSize(16);
+
+		        return v;
+
+		    }
+
+		    public View getDropDownView(int position, View convertView,ViewGroup parent) {
+
+		        View v = super.getDropDownView(position, convertView,parent);
+
+		        ((TextView) v).setGravity(Gravity.CENTER);
+
+		        return v;
+
+		    }
+
+		};
+		
+		spinner.setAdapter(adapter);
+	  }
+	
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {
 		String tag = Utilities.getTag(cvName, firstVideo, secondVideo);
@@ -176,15 +219,15 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		if (tag == null || tag.isEmpty()) return;
 		int currentPosition = currentVideo.getCurrentPosition();
 		if (cvName.equals(firstVideo.getVideoOrder())) {
-			if (firstVideo.getStartOffset() == 0) {
-				firstVideo.setStartOffset(currentPosition - 1);
+			if (firstVideo.getTagging().getTags().isEmpty()) {
+				firstVideo.setStartOffset(currentPosition);
 			}
-			firstVideo.getTagging().addTag(tag, currentPosition - firstVideo.getStartOffset());
+			firstVideo.getTagging().addTag(tag, (long) (currentPosition - firstVideo.getStartOffset()));
 		} else {
-			if (secondVideo.getStartOffset() == 0) {
-				secondVideo.setStartOffset(currentPosition - 1);
+			if (secondVideo.getTagging().getTags().isEmpty()) {
+				secondVideo.setStartOffset(currentPosition);
 			}
-			secondVideo.getTagging().addTag(tag, currentPosition - secondVideo.getStartOffset());
+			secondVideo.getTagging().addTag(tag, (long) (currentPosition - secondVideo.getStartOffset()));
 		}
 	}
 
