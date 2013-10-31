@@ -3,18 +3,21 @@ package com.veriqual.gofast;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Result;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -67,6 +70,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 		
 		addItemsOnSpinner();
+		
+		addFrameListener();
 
 		Button button = (Button) findViewById(R.id.pause);
 		button.setOnTouchListener(new OnTouchListener() {
@@ -183,32 +188,74 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		list.add("1");
 		list.add("5");
 		list.add("10");
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_style,list) {
-
-		    public View getView(int position, View convertView,ViewGroup parent) {
-
-		        View v = super.getView(position, convertView, parent);
-
-		        ((TextView) v).setTextSize(16);
-
-		        return v;
-
-		    }
-
-		    public View getDropDownView(int position, View convertView,ViewGroup parent) {
-
-		        View v = super.getDropDownView(position, convertView,parent);
-
-		        ((TextView) v).setGravity(Gravity.CENTER);
-
-		        return v;
-
-		    }
-
-		};
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_style, list);
 		
 		spinner.setAdapter(adapter);
+		
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				if (arg2 == 0) {
+					fps = 1;
+				} else if (arg2 == 1) {
+					fps = 5;
+				} else {
+					fps = 10;
+				}  
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
 	  }
+	
+	private void addFrameListener() {
+		TextView right = (TextView) findViewById(R.id.right);
+		right.setOnTouchListener(new OnTouchListener() {
+			boolean up;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					up = true;	
+				} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//					new AsyncTask<Void, Void, Result>() {
+//
+//						@Override
+//						protected Result doInBackground(Void... params) {
+//							if(!up) {
+								currentVideo.seekTo(currentVideo.getCurrentPosition() + (1000/25*fps));
+//							}							
+//							return null;
+//						}
+//					};
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					up = true;
+				}
+				
+				return false;
+			}
+		});
+		TextView left = (TextView) findViewById(R.id.left);
+		left.setOnTouchListener(new OnTouchListener() {
+			boolean up;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					while(!up) {
+						currentVideo.seekTo(currentVideo.getCurrentPosition() - (1000/25*fps));
+					}
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					up = true;
+				}
+				
+				return false;
+			}
+		});
+	}
 	
 	@Override
 	public void onDialogPositiveClick(DialogFragment dialog) {

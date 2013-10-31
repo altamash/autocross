@@ -59,8 +59,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/reverse"
-            android:onClick="moveFramesBack" />
+            android:background="@drawable/reverse" />
 
         <Spinner
             android:id="@+id/spinner1"
@@ -74,8 +73,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/spinner1"
-            android:background="@drawable/forward"
-            android:onClick="moveFramesForward" />
+            android:background="@drawable/forward" />
 
         <TextView
             android:id="@+id/lapName"
