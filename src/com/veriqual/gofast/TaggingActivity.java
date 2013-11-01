@@ -220,23 +220,22 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			public boolean onTouch(View v, MotionEvent event) {
 				
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					up = true;	
-				} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//					new AsyncTask<Void, Void, Result>() {
-//
-//						@Override
-//						protected Result doInBackground(Void... params) {
-//							if(!up) {
-								currentVideo.seekTo(currentVideo.getCurrentPosition() + (1000/25*fps));
-//							}							
-//							return null;
-//						}
-//					};
+					up = false;
+					new AsyncTask<Void, Void, Result>() {
+
+						@Override
+						protected Result doInBackground(Void... params) {
+							while(!up) {
+								currentVideo.seekTo(currentVideo.getCurrentPosition() + ((1000/25)*fps));
+							}							
+							return null;
+						}
+					}.execute();
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					up = true;
 				}
 				
-				return false;
+				return true;
 			}
 		});
 		TextView left = (TextView) findViewById(R.id.left);
@@ -245,9 +244,17 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					while(!up) {
-						currentVideo.seekTo(currentVideo.getCurrentPosition() - (1000/25*fps));
-					}
+					up = false;
+					new AsyncTask<Void, Void, Result>() {
+
+						@Override
+						protected Result doInBackground(Void... params) {
+							while(!up) {
+								currentVideo.seekTo(currentVideo.getCurrentPosition() - ((1000/25)*fps));
+							}							
+							return null;
+						}
+					}.execute();
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					up = true;
 				}
