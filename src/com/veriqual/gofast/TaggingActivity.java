@@ -64,7 +64,8 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //		}
 		firstVideo = new Video(Video.FIRSTVIDEO);
 		setupVideoView((VideoView) findViewById(R.id.view),
-				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, firstVideo);
+				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
+				firstVideo);
 		secondVideo = new Video(Video.SECONDVIDEO);
 		setupVideoView((VideoView) findViewById(R.id.view2),
 				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
@@ -275,13 +276,17 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		if (cvName.equals(firstVideo.getVideoOrder())) {
 			if (firstVideo.getTagging().getTags().isEmpty()) {
 				firstVideo.setStartOffset(currentPosition);
+				firstVideo.setOffset(currentPosition);
 			}
-			firstVideo.getTagging().addTag(tag, (long) (currentPosition - firstVideo.getStartOffset()));
+			firstVideo.setOffset(firstVideo.getOffset() + Utilities.getLastTagValue(firstVideo.getTagging()));
+			firstVideo.getTagging().addTag(tag, (long) (currentPosition - firstVideo.getOffset()));
 		} else {
 			if (secondVideo.getTagging().getTags().isEmpty()) {
 				secondVideo.setStartOffset(currentPosition);
+				secondVideo.setOffset(currentPosition);
 			}
-			secondVideo.getTagging().addTag(tag, (long) (currentPosition - secondVideo.getStartOffset()));
+			secondVideo.setOffset(secondVideo.getOffset() + Utilities.getLastTagValue(secondVideo.getTagging()));
+			secondVideo.getTagging().addTag(tag, (long) (currentPosition - secondVideo.getOffset()));
 		}
 	}
 

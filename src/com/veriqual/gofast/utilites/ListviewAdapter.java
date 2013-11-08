@@ -78,7 +78,7 @@ import com.veriqual.gofast.utilites.Constant;
 	                	result = result.substring(1);
 	                	holder.txtFourth.setTextColor(Color.RED);
 	                } else {
-	                	holder.txtFourth.setTextColor(Color.GREEN);
+	                	holder.txtFourth.setTextColor(Color.parseColor("#009900"));
 	                }
 	                holder.txtFourth.setText(result);
 	 

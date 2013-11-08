@@ -6,13 +6,20 @@ public class Video {
 	private String order;
 	private String url;
 	private Tagging tagging;
-	private int startOffset;
+	private long startOffset;
+	private long offset;
 	
-	public int getStartOffset() {
+	public long getStartOffset() {
 		return startOffset;
 	}
-	public void setStartOffset(int startOffset) {
+	public void setStartOffset(long startOffset) {
 		this.startOffset = startOffset;
+	}
+	public long getOffset() {
+		return offset;
+	}
+	public void setOffset(long l) {
+		this.offset = l;
 	}
 	public Video(String number) {
 		this.order = number;

@@ -139,6 +139,19 @@ public class Utilities {
 		return null;
 	}
 	
+	public static Long getLastTagValue(Tagging tagging) {
+		Map<String, Long> tags = tagging.getTags();
+		int size = tags.size();
+		Entry<String, Long> entry = null;
+		for(Entry<String, Long> tag : tags.entrySet()) {
+			entry = tag;
+		}
+		if(size != 0) {
+			return entry.getValue();
+		}
+		return 0l;
+	}
+	
 	public static String generateTagMsg(String currentVideo, Video first, Video second) {
 		String msg = null;
 		String firstVideoLastTag = getLastTag(first.getTagging());
@@ -337,6 +350,7 @@ public class Utilities {
 	public static ArrayList<HashMap> populateList(Video first, Video second) {
 		ArrayList<HashMap> list = new ArrayList<HashMap>();
 		for (Entry<String, Long> entry : first.getTagging().getTags().entrySet()) {
+//			if(entry.getKey().equals(Tagging.STARTTAG)) continue;
 			HashMap temp = new HashMap();
 			temp.put(Constant.FIRST_COLUMN,entry.getKey());
             temp.put(Constant.SECOND_COLUMN, getFormattedTime(entry.getValue()));
