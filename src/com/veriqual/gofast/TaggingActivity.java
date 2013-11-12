@@ -117,6 +117,23 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		video.setTagging(new Tagging());
 	}
 	
+	public void loadFirst(View v) {
+		((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
+		((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
+		firstVideo = new Video(Video.FIRSTVIDEO);
+		setupVideoView((VideoView) findViewById(R.id.view),
+				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
+				firstVideo);
+	}
+	
+	public void loadSecond(View v) {
+		((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
+		((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
+		secondVideo = new Video(Video.SECONDVIDEO);
+		setupVideoView((VideoView) findViewById(R.id.view2),
+				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
+	}
+	
 	public void setScroll10Fps(View v) {
 		fps = 5;		
 	}

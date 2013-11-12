@@ -15,8 +15,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" >
+            android:layout_gravity="center" >
+
+            <Button
+                android:id="@+id/viewBtn"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="100dp"
+                android:onClick="loadFirst"
+                android:text="Select Video 1" />
 
             <VideoView
                 android:id="@+id/view"
@@ -29,8 +36,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" >
+            android:layout_gravity="center" >
+
+            <Button
+                android:id="@+id/view2Btn"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="100dp"
+                android:onClick="loadSecond"
+                android:text="Select Video 2" />
 
             <VideoView
                 android:id="@+id/view2"
@@ -38,26 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" 
-            >
-
-            <Button
-                android:id="@+id/viewBtn"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:text="Select Video 1" 
-                android:layout_marginRight="100dp"/>
-            <Button
-                android:id="@+id/view2Btn"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:text="Select Video 2" 
-                android:layout_marginLeft="100dp"/>
         </LinearLayout>
     </GridLayout>
 
