@@ -4,22 +4,27 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.util.ByteArrayBuffer;
 
-import android.R.anim;
+import android.content.Context;
 import android.util.Log;
 
+import com.veriqual.gofast.model.ComparisonsList;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
 
@@ -382,5 +387,24 @@ public class Utilities {
 		s = ("00" + s).substring(s.length());
 		h = ("00" + h).substring(h.length());
 		return str + m + ":" + s + ":" + h;
+	}
+	
+	public static boolean saveComparison(Context context) throws IOException, ClassNotFoundException {
+		String FILENAME = "comparisons";
+		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+		
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+		oos.writeObject(ComparisonsList.getInstance());
+
+		oos.close();
+		fos.close();
+		
+		FileInputStream fis = context.openFileInput(FILENAME);
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		ComparisonsList list = (ComparisonsList) ois.readObject();
+		
+		return false;
 	}
 }

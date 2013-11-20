@@ -1,13 +1,16 @@
 package com.veriqual.gofast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.transform.Result;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -179,6 +182,15 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void compare(View v) {
+		try {
+			Utilities.saveComparison(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		final Dialog dialog = new Dialog(this);
 		dialog.setContentView(R.layout.custom);
 		dialog.setTitle("Tag Comparisons...");
@@ -304,11 +316,38 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			}
 			secondVideo.setOffset(secondVideo.getOffset() + Utilities.getLastTagValue(secondVideo.getTagging()));
 			secondVideo.getTagging().addTag(tag, (long) (currentPosition - secondVideo.getOffset()));
+
+			if(tag.equals(Tagging.FINISHTAG)) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage("Save comparison?").setPositiveButton("Yes", dialogClickListener)
+				    .setNegativeButton("No", dialogClickListener).show();
+			}
+
 		}
+		
+	}
+	
+	public void saveComparison(View v) {
+		
 	}
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
 	}
+	
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	            //Yes button clicked
+	            break;
+
+	        case DialogInterface.BUTTON_NEGATIVE:
+	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);;
+	            break;
+	        }
+	    }
+	};
 
 }
