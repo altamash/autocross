@@ -1,9 +1,14 @@
 package com.veriqual.gofast.model;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Tagging {
+public class Tagging implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static String STARTTAG = "Start Tag";
 	public static String FINISHTAG = "Finish Tag";
 	private Map<String, Long> tags = new LinkedHashMap<String, Long>();

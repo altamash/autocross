@@ -2,6 +2,7 @@ package com.veriqual.gofast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.Result;
@@ -23,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.Spinner;
@@ -30,6 +32,8 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.veriqual.gofast.dialog.TagDialog;
+import com.veriqual.gofast.model.Comparison;
+import com.veriqual.gofast.model.ComparisonsList;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
 import com.veriqual.gofast.utilites.ListviewAdapter;
@@ -56,6 +60,9 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	int fvMargin;
 	int svMargin;
 	int markerCount;
+	ComparisonsList comparisonsList;
+	String name;
+	Comparison comparison;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -65,13 +72,16 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //		    StrictMode.setThreadPolicy(policy);
 //		}
+		comparisonsList = ComparisonsList.getInstance();
 		firstVideo = new Video(Video.FIRSTVIDEO);
-		setupVideoView((VideoView) findViewById(R.id.view),
-				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
-				firstVideo);
+//		setupVideoView((VideoView) findViewById(R.id.view),
+//				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
+//				firstVideo);
 		secondVideo = new Video(Video.SECONDVIDEO);
-		setupVideoView((VideoView) findViewById(R.id.view2),
-				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
+		comparison = new Comparison(firstVideo, secondVideo);
+		ComparisonsList.getInstance().getComparisons().add(comparison);
+//		setupVideoView((VideoView) findViewById(R.id.view2),
+//				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 		
 		addItemsOnSpinner();
 		
@@ -118,12 +128,13 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		});
 		video.setUrl(url);
 		video.setTagging(new Tagging());
+//		comparisonsList.getComparisonsList()
 	}
 	
 	public void loadFirst(View v) {
 		((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
 		((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
-		firstVideo = new Video(Video.FIRSTVIDEO);
+//		firstVideo = new Video(Video.FIRSTVIDEO);
 		setupVideoView((VideoView) findViewById(R.id.view),
 				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
 				firstVideo);
@@ -132,25 +143,9 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	public void loadSecond(View v) {
 		((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
 		((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
-		secondVideo = new Video(Video.SECONDVIDEO);
+//		secondVideo = new Video(Video.SECONDVIDEO);
 		setupVideoView((VideoView) findViewById(R.id.view2),
 				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
-	}
-	
-	public void setScroll10Fps(View v) {
-		fps = 5;		
-	}
-	
-	public void setScroll20Fps(View v) {
-		fps = 10;		
-	}
-	
-	public void setScroll30Fps(View v) {
-		fps = 15;		
-	}
-	
-	public void setScroll40Fps(View v) {
-		fps = 20;		
 	}
 	
 	public void moveFramesBack(View v) {
@@ -182,15 +177,6 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void compare(View v) {
-		try {
-			Utilities.saveComparison(this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		final Dialog dialog = new Dialog(this);
 		dialog.setContentView(R.layout.custom);
 		dialog.setTitle("Tag Comparisons...");
@@ -319,16 +305,37 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 
 			if(tag.equals(Tagging.FINISHTAG)) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("Save comparison?").setPositiveButton("Yes", dialogClickListener)
+				builder.setMessage("Save comparison?")
+					.setPositiveButton("Yes", dialogClickListener)
 				    .setNegativeButton("No", dialogClickListener).show();
 			}
-
+			
+			((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
+			((Button) TaggingActivity.this.findViewById(R.id.name)).setVisibility(Button.VISIBLE);
 		}
+		
 		
 	}
 	
 	public void saveComparison(View v) {
-		
+    	try {
+			Utilities.saveComparison(TaggingActivity.this, ComparisonsList.getInstance());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void nameComparison(View v) {
+//		comparison.setName(cvName);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		EditText input = new EditText(this);
+		input.setText(comparison.getName() == null ? "Comparison_" : comparison.getName());
+		builder.setMessage("Name comparison")
+			.setView(input)	
+			.setPositiveButton("Save", nameClickListener)
+		    .setNegativeButton("Cancel", nameClickListener).show();
 	}
 
 	@Override
@@ -340,11 +347,32 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	    public void onClick(DialogInterface dialog, int which) {
 	        switch (which){
 	        case DialogInterface.BUTTON_POSITIVE:
-	            //Yes button clicked
+	        	try {
+					Utilities.saveComparison(TaggingActivity.this, ComparisonsList.getInstance());
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 	            break;
 
 	        case DialogInterface.BUTTON_NEGATIVE:
-	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);;
+	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
+	            break;
+	        }
+	    }
+	};
+	
+	DialogInterface.OnClickListener nameClickListener = new DialogInterface.OnClickListener() {
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	        	comparison.setName(cvName);
+	            break;
+
+	        case DialogInterface.BUTTON_NEGATIVE:
+	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
 	            break;
 	        }
 	    }

@@ -19,12 +19,12 @@ public class ComparisonsList implements Serializable {
 		return comparisonsList;
 	}
 
-	public static ComparisonsList getComparisonsList() {
-		return comparisonsList;
+	public Set<Comparison> getComparisons() {
+		return comparisons;
 	}
 
-	public static void setComparisonsList(ComparisonsList comparisonsList) {
-		ComparisonsList.comparisonsList = comparisonsList;
+	public void setComparisons(Set<Comparison> comparisons) {
+		this.comparisons = comparisons;
 	}
 
 }

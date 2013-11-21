@@ -128,6 +128,14 @@
             android:onClick="saveComparison"
             android:text="Save Comparison" 
             android:visibility="gone"/>
+        <Button
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/save"
+            android:onClick="nameComparison"
+            android:text="Name Comparison" 
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

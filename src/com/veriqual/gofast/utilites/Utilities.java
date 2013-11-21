@@ -389,13 +389,13 @@ public class Utilities {
 		return str + m + ":" + s + ":" + h;
 	}
 	
-	public static boolean saveComparison(Context context) throws IOException, ClassNotFoundException {
+	public static boolean saveComparison(Context context, ComparisonsList comparisonsList) throws IOException, ClassNotFoundException {
 		String FILENAME = "comparisons";
 		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 		
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-		oos.writeObject(ComparisonsList.getInstance());
+		oos.writeObject(comparisonsList);
 
 		oos.close();
 		fos.close();
@@ -404,7 +404,7 @@ public class Utilities {
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		ComparisonsList list = (ComparisonsList) ois.readObject();
-		
+//		list.getComparisons().iterator().next().getSecondVideo().getTagging();
 		return false;
 	}
 }

@@ -1,6 +1,12 @@
 package com.veriqual.gofast.model;
 
-public class Video {
+import java.io.Serializable;
+
+public class Video implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static String FIRSTVIDEO = "First Video";
 	public static String SECONDVIDEO = "Second Video";
 	private String order;
