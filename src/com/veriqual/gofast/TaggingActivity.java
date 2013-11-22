@@ -63,6 +63,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	ComparisonsList comparisonsList;
 	String name;
 	Comparison comparison;
+	EditText input;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -129,6 +130,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		video.setUrl(url);
 		video.setTagging(new Tagging());
 //		comparisonsList.getComparisonsList()
+		((Button) TaggingActivity.this.findViewById(R.id.tag)).setEnabled(true);
 	}
 	
 	public void loadFirst(View v) {
@@ -310,8 +312,9 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 				    .setNegativeButton("No", dialogClickListener).show();
 			}
 			
-			((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
-			((Button) TaggingActivity.this.findViewById(R.id.name)).setVisibility(Button.VISIBLE);
+			((Button) TaggingActivity.this.findViewById(R.id.save)).setEnabled(true);
+			((Button) TaggingActivity.this.findViewById(R.id.name)).setEnabled(true);
+			((Button) TaggingActivity.this.findViewById(R.id.compare)).setEnabled(true);
 		}
 		
 		
@@ -330,8 +333,9 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	public void nameComparison(View v) {
 //		comparison.setName(cvName);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		EditText input = new EditText(this);
-		input.setText(comparison.getName() == null ? "Comparison_" : comparison.getName());
+		input = new EditText(this);
+		input.setText(comparison.getName() == null ? "Comparison_" + (new Date()).toString().replace(" ", "_"): comparison.getName());
+		input.setSelection(input.getText().toString().length());
 		builder.setMessage("Name comparison")
 			.setView(input)	
 			.setPositiveButton("Save", nameClickListener)
@@ -368,7 +372,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	    public void onClick(DialogInterface dialog, int which) {
 	        switch (which){
 	        case DialogInterface.BUTTON_POSITIVE:
-	        	comparison.setName(cvName);
+	        	comparison.setName(input.getText().toString());
 	            break;
 
 	        case DialogInterface.BUTTON_NEGATIVE:

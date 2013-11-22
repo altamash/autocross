@@ -110,6 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_toRightOf="@id/lapName"
+            android:enabled="false"
             android:onClick="dialog"
             android:text="Tag" />
 
@@ -118,24 +119,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tag"
+            android:enabled="false"
             android:onClick="compare"
-            android:text="Comp" />
+            android:text="Table" />
+
         <Button
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/compare"
+            android:enabled="false"
             android:onClick="saveComparison"
-            android:text="Save Comparison" 
-            android:visibility="gone"/>
+            android:text="Save Comparison" />
+
         <Button
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/save"
+            android:enabled="false"
             android:onClick="nameComparison"
-            android:text="Name Comparison" 
-            android:visibility="gone"/>
+            android:text="Name Comparison" />
     </RelativeLayout>
 
 </LinearLayout>
