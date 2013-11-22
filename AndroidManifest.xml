@@ -51,6 +51,10 @@
             android:name="com.veriqual.gofast.ListActivity"
             android:label="@string/title_activity_list" >
         </activity>
+        <activity
+            android:name="com.veriqual.gofast.VideosListActivity"
+            android:label="@string/title_activity_videos_list" >
+        </activity>
     </application>
 
 </manifest>

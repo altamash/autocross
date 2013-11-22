@@ -6,5 +6,6 @@
     <string name="fps">25</string>
     <string name="marker">Marker</string>
     <string name="title_activity_list">Comparisons</string>
+    <string name="title_activity_videos_list">Comparisons Videos</string>
 
 </resources>

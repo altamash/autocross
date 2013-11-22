@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import org.apache.http.util.ByteArrayBuffer;
 import android.content.Context;
 import android.util.Log;
 
+import com.veriqual.gofast.model.Comparison;
 import com.veriqual.gofast.model.ComparisonsList;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
@@ -400,11 +402,31 @@ public class Utilities {
 		oos.close();
 		fos.close();
 		
-		FileInputStream fis = context.openFileInput(FILENAME);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		
-		ComparisonsList list = (ComparisonsList) ois.readObject();
-//		list.getComparisons().iterator().next().getSecondVideo().getTagging();
 		return false;
+	}
+	
+	public static ComparisonsList getComparisonsList(Context context) {
+		ComparisonsList list = ComparisonsList.getInstance();
+		String FILENAME = "comparisons";
+		FileInputStream fis;
+		ObjectInputStream ois;
+		try {
+			fis = context.openFileInput(FILENAME);
+			ois = new ObjectInputStream(fis);
+			list = (ComparisonsList) ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (StreamCorruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 }

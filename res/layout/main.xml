@@ -23,6 +23,13 @@
         android:id="@+id/videos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="listVideos"
         android:text="View Comparison Videos" />
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit" 
+        android:onClick="exit"/>
 
 </LinearLayout>

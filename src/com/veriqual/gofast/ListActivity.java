@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.veriqual.gofast.model.Comparison;
 import com.veriqual.gofast.model.ComparisonsList;
+import com.veriqual.gofast.utilites.Utilities;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -24,7 +25,7 @@ public class ListActivity extends Activity {
 		
 		final ArrayList<String> comparisonlist = new ArrayList<String>();
 		
-		for (Comparison comparison : ComparisonsList.getInstance().getComparisons()) {
+		for (Comparison comparison : Utilities.getComparisonsList(this).getComparisons()) {
 			comparisonlist.add(comparison.getName());
 		}
 		final ArrayAdapter<String> sessionAdapter = new ArrayAdapter<String>(

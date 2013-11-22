@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	public void createComparison(View v) {
 		Intent intent = new Intent(this, TaggingActivity.class);
 		startActivity(intent);
@@ -34,6 +34,16 @@ public class MainActivity extends Activity {
 	public void list(View v) {
 		Intent intent = new Intent(this, ListActivity.class);
 		startActivity(intent);
+	}
+	
+	public void listVideos(View v) {
+		Intent intent = new Intent(this, VideosListActivity.class);
+		startActivity(intent);
+	}
+
+	public void exit(View v) {
+		finish();
+		System.exit(0);
 	}
 
 }

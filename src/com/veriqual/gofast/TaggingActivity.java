@@ -73,7 +73,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //		    StrictMode.setThreadPolicy(policy);
 //		}
-		comparisonsList = ComparisonsList.getInstance();
+		comparisonsList = Utilities.getComparisonsList(this);
 		firstVideo = new Video(Video.FIRSTVIDEO);
 //		setupVideoView((VideoView) findViewById(R.id.view),
 //				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
@@ -159,7 +159,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void dialog(View v) {
-		if (cvName == null) return; 
+		if (cvName == null || firstVideo.getUrl() == null || secondVideo.getUrl() == null) return; 
 		dialog = new TagDialog();
 		Bundle args = new Bundle();
 		args.putString("msg", Utilities.generateTagMsg(cvName, firstVideo, secondVideo));
@@ -307,7 +307,11 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 
 			if(tag.equals(Tagging.FINISHTAG)) {
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				input = new EditText(this);
+				input.setText(comparison.getName());
+				input.setSelection(input.getText().toString().length());
 				builder.setMessage("Save comparison?")
+					.setView(input)
 					.setPositiveButton("Yes", dialogClickListener)
 				    .setNegativeButton("No", dialogClickListener).show();
 			}
@@ -315,19 +319,21 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			((Button) TaggingActivity.this.findViewById(R.id.save)).setEnabled(true);
 			((Button) TaggingActivity.this.findViewById(R.id.name)).setEnabled(true);
 			((Button) TaggingActivity.this.findViewById(R.id.compare)).setEnabled(true);
+			((Button) TaggingActivity.this.findViewById(R.id.video)).setEnabled(true);
 		}
 		
 		
 	}
 	
 	public void saveComparison(View v) {
-    	try {
-			Utilities.saveComparison(TaggingActivity.this, ComparisonsList.getInstance());
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		input = new EditText(this);
+		input.setText(comparison.getName());
+		input.setSelection(input.getText().toString().length());
+		builder.setMessage("Save comparison")
+			.setView(input)	
+			.setPositiveButton("Save", dialogClickListener)
+		    .setNegativeButton("Cancel", dialogClickListener).show();
 	}
 	
 	public void nameComparison(View v) {
@@ -338,7 +344,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		input.setSelection(input.getText().toString().length());
 		builder.setMessage("Name comparison")
 			.setView(input)	
-			.setPositiveButton("Save", nameClickListener)
+			.setPositiveButton("Ok", nameClickListener)
 		    .setNegativeButton("Cancel", nameClickListener).show();
 	}
 
@@ -351,6 +357,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	    public void onClick(DialogInterface dialog, int which) {
 	        switch (which){
 	        case DialogInterface.BUTTON_POSITIVE:
+	        	comparison.setName(input.getText().toString());
 	        	try {
 					Utilities.saveComparison(TaggingActivity.this, ComparisonsList.getInstance());
 				} catch (IOException e) {
@@ -361,7 +368,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	            break;
 
 	        case DialogInterface.BUTTON_NEGATIVE:
-	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
+//	        	((Button) TaggingActivity.this.findViewById(R.id.save)).setVisibility(Button.VISIBLE);
 	            break;
 	        }
 	    }

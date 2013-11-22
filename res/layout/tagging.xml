@@ -115,22 +115,13 @@
             android:text="Tag" />
 
         <Button
-            android:id="@+id/compare"
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tag"
             android:enabled="false"
-            android:onClick="compare"
-            android:text="Table" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/compare"
-            android:enabled="false"
             android:onClick="saveComparison"
-            android:text="Save Comparison" />
+            android:text="Save" />
 
         <Button
             android:id="@+id/name"
@@ -139,7 +130,25 @@
             android:layout_toRightOf="@id/save"
             android:enabled="false"
             android:onClick="nameComparison"
-            android:text="Name Comparison" />
+            android:text="Rename" />
+
+        <Button
+            android:id="@+id/compare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/name"
+            android:enabled="false"
+            android:onClick="compare"
+            android:text="Table" />
+
+        <Button
+            android:id="@+id/video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/compare"
+            android:enabled="false"
+            android:onClick=""
+            android:text="Video" />
     </RelativeLayout>
 
 </LinearLayout>

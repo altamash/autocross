@@ -16,7 +16,7 @@ public class Comparison implements Serializable {
 	public Comparison(Video first,	Video second) {
 		firstVideo = first;
 		secondVideo = second;
-		name = "Comparison_" + (new Date()).toString().replace(" ", "_");
+		name = "Comparison_" + (new Date()).toString();
 		createdAt = new Date();
 	}
 
