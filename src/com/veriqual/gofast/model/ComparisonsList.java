@@ -1,8 +1,9 @@
 package com.veriqual.gofast.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class ComparisonsList implements Serializable {
 	/**
@@ -10,7 +11,7 @@ public class ComparisonsList implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static ComparisonsList comparisonsList;
-	Set<Comparison> comparisons = new TreeSet<Comparison>();
+	ArrayList<Comparison> comparisons = new ArrayList<Comparison>();
 
 	public static ComparisonsList getInstance() {
 		if (comparisonsList == null) {
@@ -19,11 +20,11 @@ public class ComparisonsList implements Serializable {
 		return comparisonsList;
 	}
 
-	public Set<Comparison> getComparisons() {
+	public ArrayList<Comparison> getComparisons() {
 		return comparisons;
 	}
 
-	public void setComparisons(Set<Comparison> comparisons) {
+	public void setComparisons(ArrayList<Comparison> comparisons) {
 		this.comparisons = comparisons;
 	}
 

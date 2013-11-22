@@ -3,7 +3,7 @@ package com.veriqual.gofast.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Comparison implements Comparable<Date>, Serializable {
+public class Comparison implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,6 +16,7 @@ public class Comparison implements Comparable<Date>, Serializable {
 	public Comparison(Video first,	Video second) {
 		firstVideo = first;
 		secondVideo = second;
+		name = "Comparison_" + (new Date()).toString().replace(" ", "_");
 		createdAt = new Date();
 	}
 
@@ -41,15 +42,5 @@ public class Comparison implements Comparable<Date>, Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public int compareTo(Date date) {
-		if (createdAt.before(date)) {
-			return -1;
-		} else if (createdAt.before(date)) {
-			return 1;
-		}
-		return 0;
 	}
 }

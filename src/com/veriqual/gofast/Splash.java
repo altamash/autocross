@@ -41,7 +41,7 @@ public class Splash extends Activity {
 	
 	private void moveToHomeScreen() {
 //		if (Utilities.getUserKey(Constants.USERID, Splash.this) == null) {
-			Intent baseIntent = new Intent(Splash.this, TaggingActivity.class);
+			Intent baseIntent = new Intent(Splash.this, MainActivity.class);
 			startActivity(baseIntent);
 			this.finish();
 //		} else {

@@ -80,7 +80,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //				firstVideo);
 		secondVideo = new Video(Video.SECONDVIDEO);
 		comparison = new Comparison(firstVideo, secondVideo);
-		ComparisonsList.getInstance().getComparisons().add(comparison);
+		comparisonsList.getComparisons().add(comparison);
 //		setupVideoView((VideoView) findViewById(R.id.view2),
 //				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 		
@@ -334,7 +334,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //		comparison.setName(cvName);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		input = new EditText(this);
-		input.setText(comparison.getName() == null ? "Comparison_" + (new Date()).toString().replace(" ", "_"): comparison.getName());
+		input.setText(comparison.getName());
 		input.setSelection(input.getText().toString().length());
 		builder.setMessage("Name comparison")
 			.setView(input)	
