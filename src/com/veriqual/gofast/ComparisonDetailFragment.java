@@ -5,10 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.veriqual.gofast.dummy.DummyContent.DummyItem;
 import com.veriqual.gofast.model.Comparison;
+import com.veriqual.gofast.utilites.ListviewAdapter;
 import com.veriqual.gofast.utilites.Utilities;
 
 /**
@@ -58,8 +60,15 @@ public class ComparisonDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (comparison != null) {
-			((TextView) rootView.findViewById(R.id.comparison_detail))
-					.setText(comparison.getName());
+//			((TextView) rootView.findViewById(R.id.comparison_detail))
+//					.setText(comparison.getName());
+			
+			ListView lview = (ListView) rootView.findViewById(R.id.complistview);
+			ListviewAdapter adapter = new ListviewAdapter(
+					ComparisonDetailFragment.this.getActivity(),
+					Utilities.populateList(comparison.getFirstVideo(),
+							comparison.getSecondVideo()));
+	        lview.setAdapter(adapter);
 		}
 
 		return rootView;
