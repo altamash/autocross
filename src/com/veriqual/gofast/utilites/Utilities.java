@@ -15,7 +15,6 @@ import java.io.StreamCorruptedException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,7 +24,6 @@ import org.apache.http.util.ByteArrayBuffer;
 import android.content.Context;
 import android.util.Log;
 
-import com.veriqual.gofast.model.Comparison;
 import com.veriqual.gofast.model.ComparisonsList;
 import com.veriqual.gofast.model.Tagging;
 import com.veriqual.gofast.model.Video;
@@ -391,7 +389,7 @@ public class Utilities {
 		return str + m + ":" + s + ":" + h;
 	}
 	
-	public static boolean saveComparison(Context context, ComparisonsList comparisonsList) throws IOException, ClassNotFoundException {
+	public static void saveComparison(Context context, ComparisonsList comparisonsList) throws IOException, ClassNotFoundException {
 		String FILENAME = "comparisons";
 		FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 		
@@ -401,8 +399,6 @@ public class Utilities {
 
 		oos.close();
 		fos.close();
-		
-		return false;
 	}
 	
 	public static ComparisonsList getComparisonsList(Context context) {

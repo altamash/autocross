@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.veriqual.gofast.R;
-import com.veriqual.gofast.utilites.Constant;
 	 
 	public class ListviewAdapter extends BaseAdapter
 	{

@@ -2,8 +2,6 @@ package com.veriqual.gofast.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class ComparisonsList implements Serializable {
 	/**

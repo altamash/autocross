@@ -55,6 +55,18 @@
             android:name="com.veriqual.gofast.VideosListActivity"
             android:label="@string/title_activity_videos_list" >
         </activity>
+        <activity
+            android:name="com.veriqual.gofast.ComparisonListActivity"
+            android:label="@string/title_comparison_list" >
+        </activity>
+        <activity
+            android:name="com.veriqual.gofast.ComparisonDetailActivity"
+            android:label="@string/title_comparison_detail"
+            android:parentActivityName=".ComparisonListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ComparisonListActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package com.veriqual.gofast;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.Result;
@@ -73,13 +72,15 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 //		    StrictMode.setThreadPolicy(policy);
 //		}
-		comparisonsList = Utilities.getComparisonsList(this);
+//		comparisonsList = Utilities.getComparisonsList(this);
+		ComparisonsList.getInstance().setComparisons(Utilities.getComparisonsList(this).getComparisons());
 		firstVideo = new Video(Video.FIRSTVIDEO);
 //		setupVideoView((VideoView) findViewById(R.id.view),
 //				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
 //				firstVideo);
 		secondVideo = new Video(Video.SECONDVIDEO);
 		comparison = new Comparison(firstVideo, secondVideo);
+		comparisonsList = ComparisonsList.getInstance();
 		comparisonsList.getComparisons().add(comparison);
 //		setupVideoView((VideoView) findViewById(R.id.view2),
 //				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);

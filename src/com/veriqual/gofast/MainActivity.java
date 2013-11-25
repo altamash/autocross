@@ -1,13 +1,8 @@
 package com.veriqual.gofast;
 
-import java.io.IOException;
-
-import com.veriqual.gofast.model.ComparisonsList;
-import com.veriqual.gofast.utilites.Utilities;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
@@ -32,7 +27,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void list(View v) {
-		Intent intent = new Intent(this, ListActivity.class);
+		Intent intent = new Intent(this, ComparisonListActivity.class);
 		startActivity(intent);
 	}
 	

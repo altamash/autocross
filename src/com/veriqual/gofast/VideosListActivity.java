@@ -11,20 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.veriqual.gofast.model.Comparison;
-import com.veriqual.gofast.utilites.Utilities;
+import com.veriqual.gofast.model.ComparisonsList;
 
-public class ListActivity extends Activity {
+public class VideosListActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_list);
+		setContentView(R.layout.activity_videos_list);
 
 		ListView compList = (ListView) findViewById(R.id.comparisonList);
 		
 		final ArrayList<String> comparisonlist = new ArrayList<String>();
 		
-		for (Comparison comparison : Utilities.getComparisonsList(this).getComparisons()) {
+		for (Comparison comparison : ComparisonsList.getInstance().getComparisons()) {
 			comparisonlist.add(comparison.getName());
 		}
 		final ArrayAdapter<String> sessionAdapter = new ArrayAdapter<String>(
