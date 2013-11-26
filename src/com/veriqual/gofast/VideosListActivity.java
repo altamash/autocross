@@ -3,6 +3,7 @@ package com.veriqual.gofast;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.veriqual.gofast.model.Comparison;
-import com.veriqual.gofast.model.ComparisonsList;
+import com.veriqual.gofast.utilites.Utilities;
 
 public class VideosListActivity extends Activity {
 
@@ -24,7 +25,7 @@ public class VideosListActivity extends Activity {
 		
 		final ArrayList<String> comparisonlist = new ArrayList<String>();
 		
-		for (Comparison comparison : ComparisonsList.getInstance().getComparisons()) {
+		for (Comparison comparison : Utilities.getComparisonsList(this).getComparisons()) {
 			comparisonlist.add(comparison.getName());
 		}
 		final ArrayAdapter<String> sessionAdapter = new ArrayAdapter<String>(
@@ -34,7 +35,9 @@ public class VideosListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int i, long l) {
-
+				Intent intent = new Intent(VideosListActivity.this, ComparisonVideosActivity.class);
+				intent.putExtra("index", i);
+				startActivity(intent);
 			}
 		});
 	}
