@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.veriqual.gofast.dummy.DummyContent;
 import com.veriqual.gofast.model.Comparison;
 import com.veriqual.gofast.utilites.Utilities;
 

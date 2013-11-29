@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -198,6 +199,12 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		});
 
 		dialog.show();
+	}
+	
+	public void view(View v) {
+		Intent intent = new Intent(TaggingActivity.this, ComparisonVideosActivity.class);
+		intent.putExtra("index", comparisonsList.getComparisons().size() - 1);
+		startActivity(intent);
 	}
 	
 	public void addItemsOnSpinner() {

@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.veriqual.gofast.dummy.DummyContent.DummyItem;
 import com.veriqual.gofast.model.Comparison;
 import com.veriqual.gofast.utilites.ListviewAdapter;
 import com.veriqual.gofast.utilites.Utilities;

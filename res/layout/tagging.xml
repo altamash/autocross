@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/compare"
             android:enabled="false"
-            android:onClick=""
+            android:onClick="view"
             android:text="Video" />
     </RelativeLayout>
 
