@@ -418,7 +418,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 					setupVideoView((VideoView) findViewById(R.id.view),
 							path, 
 							firstVideo);
-					
+					firstClicked = false;
 				} else {
 					((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
 					((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
