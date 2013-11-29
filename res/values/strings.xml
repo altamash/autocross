@@ -12,5 +12,7 @@
     <string name="title_comparison_list">Comparisons</string>
     <string name="title_comparison_detail">Comparison Detail</string>
     <string name="title_activity_comparison_videos">Video Comparison</string>
+    <string name="title_activity_folder">FolderActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

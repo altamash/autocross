@@ -67,6 +67,10 @@
             android:name="com.veriqual.gofast.ComparisonVideosActivity"
             android:label="@string/title_activity_comparison_videos" >
         </activity>
+        <activity
+            android:name="com.veriqual.gofast.FolderActivity"
+            android:label="@string/title_activity_folder" >
+        </activity>
     </application>
 
 </manifest>

@@ -64,6 +64,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	String name;
 	Comparison comparison;
 	EditText input;
+	private boolean firstClicked;
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -136,20 +137,27 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	public void loadFirst(View v) {
-		((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
-		((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
-//		firstVideo = new Video(Video.FIRSTVIDEO);
-		setupVideoView((VideoView) findViewById(R.id.view),
-				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
-				firstVideo);
+		firstClicked = true;
+		Intent intent = new Intent(TaggingActivity.this, FolderActivity.class);
+		startActivityForResult(intent, 1);
+		
+//		((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
+//		((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
+////		firstVideo = new Video(Video.FIRSTVIDEO);
+//		setupVideoView((VideoView) findViewById(R.id.view),
+//				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
+//				firstVideo);
 	}
 	
 	public void loadSecond(View v) {
-		((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
-		((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
-//		secondVideo = new Video(Video.SECONDVIDEO);
-		setupVideoView((VideoView) findViewById(R.id.view2),
-				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
+		Intent intent = new Intent(TaggingActivity.this, FolderActivity.class);
+		startActivityForResult(intent, 1);
+		
+//		((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
+//		((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
+////		secondVideo = new Video(Video.SECONDVIDEO);
+//		setupVideoView((VideoView) findViewById(R.id.view2),
+//				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 	}
 	
 	public void moveFramesBack(View v) {
@@ -396,5 +404,33 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	        }
 	    }
 	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == 1) {
+
+			if (resultCode == RESULT_OK) {
+				String path = data.getStringExtra("path");
+				
+				if (firstClicked) {
+					((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
+					((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
+					setupVideoView((VideoView) findViewById(R.id.view),
+							path, 
+							firstVideo);
+					
+				} else {
+					((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
+					((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
+					setupVideoView((VideoView) findViewById(R.id.view2),
+							path, secondVideo);
+				}
+				
+			}
+			if (resultCode == RESULT_CANCELED) {
+				// Write your code if there's no result
+			}
+		}
+	}
 
 }
