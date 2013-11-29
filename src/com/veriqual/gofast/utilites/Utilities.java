@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -22,6 +23,11 @@ import java.util.Map.Entry;
 import org.apache.http.util.ByteArrayBuffer;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.veriqual.gofast.model.ComparisonsList;
@@ -424,5 +430,61 @@ public class Utilities {
 		}
 		
 		return list;
+	}
+	
+	public static void saveAssetToSD(Context context, String name) {
+//		InputStream stream = null;
+//		int i = 0;
+//		try {
+//			stream = context.getAssets().open(name);
+//			i = stream.read();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		InputStream is;
+		 try
+		 {
+		     is = context.getAssets().open(name);
+		     int siz = is.available();
+		     byte[] buffer = new byte[siz];
+		     is.read(buffer);
+		         //This text contains the content of the file..
+//		     String text = new String(buffer);
+//		         is.close();
+		         saveFileToCard(buffer, name);
+		         is.close();
+		 }
+		 catch (Exception e)
+		 {
+//		      Toast.makeText(CheatSheet.this,"File Not Found Error.Please ensure that file is not deleted.", Toast.LENGTH_SHORT).show();
+		 }
+	}
+	
+	private static String getRealPathFromURI(Context context, Uri contentURI) {
+	    Cursor cursor = context.getContentResolver().query(contentURI, null, null, null, null);
+	    if (cursor == null) { // Source is Dropbox or other similar local file path
+	        return contentURI.getPath();
+	    } else { 
+	        cursor.moveToFirst(); 
+	        int idx = cursor.getColumnIndex(MediaStore.Video.VideoColumns.DATA); 
+	        return cursor.getString(idx); 
+	    }
+	}
+	
+	private static void saveFileToCard(byte[] data, String filename) {
+		File file = new File(Environment.getExternalStorageDirectory(),
+				filename);
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(file);
+			fos.write(data);
+			fos.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// handle exception
+		} catch (IOException e) {
+			// handle exception
+		}
 	}
 }

@@ -3,6 +3,8 @@ package com.veriqual.gofast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.veriqual.gofast.utilites.Utilities;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class Splash extends Activity {
 			public void run() {
 				handler.post(new Runnable() {
 					public void run() {
+						Utilities.saveAssetToSD(Splash.this, "race.mp4");
 						moveToHomeScreen();
 					}
 
