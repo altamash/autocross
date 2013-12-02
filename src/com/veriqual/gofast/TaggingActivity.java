@@ -12,6 +12,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,6 +23,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -91,40 +96,33 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		
 		addFrameListener();
 
-		Button button = (Button) findViewById(R.id.pause);
-		button.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				currentPosition = mFirstVideo.getCurrentPosition();
-				mFirstVideo.pause();
-				return false;
-			}
-		});
-		
 		lapName = (TextView) findViewById(R.id.lapName);
 
-		Button seek = (Button) findViewById(R.id.seek);
-		seek.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				mFirstVideo.start();
-				mFirstVideo.seekTo(currentPosition);
-				return false;
-			}
-		});
+//		Button seek = (Button) findViewById(R.id.seek);
+//		seek.setOnTouchListener(new OnTouchListener() {
+//			
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				mFirstVideo.start();
+//				mFirstVideo.seekTo(currentPosition);
+//				return false;
+//			}
+//		});
 	}
 	
-	private void setupVideoView(final VideoView videoView, String url, final Video video) {
+	private void setupVideoView(final VideoView videoView, final String url, final Video video) {
 		videoView.setVideoURI(Uri.parse(url));
 		videoView.setMediaController(new MediaController(this));
 		videoView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if(currentVideo != null) currentVideo.pause();
+				if(currentVideo != null) {
+					currentVideo.pause();
+					currentVideo.setBackgroundColor(Color.parseColor("#77777750"));
+				}
 				currentVideo = videoView;
+				currentVideo.setBackgroundColor(Color.parseColor("#00000000"));
 				cvName = video.getVideoOrder();
 				lapName.setText("Selected Lap: " + cvName);
 				return false;
