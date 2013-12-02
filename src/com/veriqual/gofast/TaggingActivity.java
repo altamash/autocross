@@ -119,7 +119,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 			public boolean onTouch(View v, MotionEvent event) {
 				if(currentVideo != null) {
 					currentVideo.pause();
-					currentVideo.setBackgroundColor(Color.parseColor("#77777750"));
+					currentVideo.setBackgroundColor(Color.parseColor("#66666666"));
 				}
 				currentVideo = videoView;
 				currentVideo.setBackgroundColor(Color.parseColor("#00000000"));
