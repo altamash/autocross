@@ -12,9 +12,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,8 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -75,22 +71,12 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.tagging);
-//		if (android.os.Build.VERSION.SDK_INT > 9) {
-//		    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//		    StrictMode.setThreadPolicy(policy);
-//		}
-//		comparisonsList = Utilities.getComparisonsList(this);
 		ComparisonsList.getInstance().setComparisons(Utilities.getComparisonsList(this).getComparisons());
 		firstVideo = new Video(Video.FIRSTVIDEO);
-//		setupVideoView((VideoView) findViewById(R.id.view),
-//				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
-//				firstVideo);
 		secondVideo = new Video(Video.SECONDVIDEO);
 		comparison = new Comparison(firstVideo, secondVideo);
 		comparisonsList = ComparisonsList.getInstance();
 		comparisonsList.getComparisons().add(comparison);
-//		setupVideoView((VideoView) findViewById(R.id.view2),
-//				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 		
 		addItemsOnSpinner();
 		
@@ -130,7 +116,6 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		});
 		video.setUrl(url);
 		video.setTagging(new Tagging());
-//		comparisonsList.getComparisonsList()
 		((Button) TaggingActivity.this.findViewById(R.id.tag)).setEnabled(true);
 	}
 	
@@ -138,24 +123,11 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 		firstClicked = true;
 		Intent intent = new Intent(TaggingActivity.this, FolderActivity.class);
 		startActivityForResult(intent, 1);
-		
-//		((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
-//		((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
-////		firstVideo = new Video(Video.FIRSTVIDEO);
-//		setupVideoView((VideoView) findViewById(R.id.view),
-//				"android.resource://" + getPackageName() + "/" + R.raw.v8_turbo_480x270, 
-//				firstVideo);
 	}
 	
 	public void loadSecond(View v) {
 		Intent intent = new Intent(TaggingActivity.this, FolderActivity.class);
 		startActivityForResult(intent, 1);
-		
-//		((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
-//		((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
-////		secondVideo = new Video(Video.SECONDVIDEO);
-//		setupVideoView((VideoView) findViewById(R.id.view2),
-//				"http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e", secondVideo);
 	}
 	
 	public void moveFramesBack(View v) {
