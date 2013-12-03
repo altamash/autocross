@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.Spinner;
@@ -45,7 +47,6 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 //	http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8
 //	http://vimeo.com/5313987/download?t=1380623488&v=5800982&s=5fd7d894420e9fe94256ed4c4ecb827e
 
-	private VideoView mFirstVideo;
 	private VideoView currentVideo;
 	private String cvName;
 	int duration;
@@ -97,8 +98,9 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 	}
 	
 	private void setupVideoView(final VideoView videoView, final String url, final Video video) {
+		final MediaController controller = new MediaController(this);
 		videoView.setVideoURI(Uri.parse(url));
-		videoView.setMediaController(new MediaController(this));
+		videoView.setMediaController(controller);
 		videoView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -112,6 +114,13 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 				cvName = video.getVideoOrder();
 				lapName.setText("Selected Lap: " + cvName);
 				return false;
+			}
+		});
+		videoView.setOnPreparedListener(new OnPreparedListener() {
+			
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				controller.setAnchorView((LinearLayout) findViewById(R.id.linearLayout));				
 			}
 		});
 		video.setUrl(url);
@@ -230,7 +239,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 						@Override
 						protected Result doInBackground(Void... params) {
 							while(!up) {
-								currentVideo.seekTo(currentVideo.getCurrentPosition() + ((1000/25)*fps));
+								currentVideo.seekTo(currentVideo.getCurrentPosition() + 100);
 							}							
 							return null;
 						}
@@ -254,7 +263,7 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 						@Override
 						protected Result doInBackground(Void... params) {
 							while(!up) {
-								currentVideo.seekTo(currentVideo.getCurrentPosition() - ((1000/25)*fps));
+								currentVideo.seekTo(currentVideo.getCurrentPosition() - 10);
 							}							
 							return null;
 						}
@@ -384,14 +393,14 @@ public class TaggingActivity extends Activity implements TagDialog.TagDialogList
 				
 				if (firstClicked) {
 					((Button) findViewById(R.id.viewBtn)).setVisibility(Button.GONE);
-					((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
+//					((VideoView) findViewById(R.id.view)).setVisibility(Button.VISIBLE);
 					setupVideoView((VideoView) findViewById(R.id.view),
 							path, 
 							firstVideo);
 					firstClicked = false;
 				} else {
 					((Button) findViewById(R.id.view2Btn)).setVisibility(Button.GONE);
-					((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
+//					((VideoView) findViewById(R.id.view2)).setVisibility(Button.VISIBLE);	
 					setupVideoView((VideoView) findViewById(R.id.view2),
 							path, secondVideo);
 				}

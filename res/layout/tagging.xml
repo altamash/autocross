@@ -4,75 +4,52 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <GridLayout
-        android:id="@+id/GridLayout1"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:rowCount="1" >
+        android:layout_weight="1"
+        android:orientation="horizontal" >
 
-        <LinearLayout
+        <VideoView
+            android:id="@+id/view"
+            android:layout_width="470dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" />
+
+        <VideoView
+            android:id="@+id/view2"
+            android:layout_width="470dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/viewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
+            android:onClick="loadFirst"
+            android:text="Select Video 1" />
 
-            <Button
-                android:id="@+id/viewBtn"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginRight="100dp"
-                android:onClick="loadFirst"
-                android:text="Select Video 1" />
-
-            <VideoView
-                android:id="@+id/view"
-                android:layout_width="470dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
+            android:id="@+id/view2Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
-
-            <Button
-                android:id="@+id/view2Btn"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="100dp"
-                android:onClick="loadSecond"
-                android:text="Select Video 2" />
-
-            <VideoView
-                android:id="@+id/view2"
-                android:layout_width="470dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:visibility="gone" />
-        </LinearLayout>
-    </GridLayout>
+            android:onClick="loadSecond"
+            android:text="Select Video 2" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:layout_gravity="center" >
-
-        <Button
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pause"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/seek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seek"
-            android:visibility="gone" />
+        android:layout_gravity="center"
+        android:gravity="bottom" >
 
         <Button
             android:id="@+id/left"
